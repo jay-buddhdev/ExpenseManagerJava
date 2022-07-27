@@ -20,7 +20,6 @@ import java.util.List;
 
 public class WalkThroughScreenActivity extends AppCompatActivity {
 
-
     private OnboardingAdapter onboardingAdapter;
     private LinearLayout layoutOnboardingIndicator;
     private MaterialButton loginBtn,signupBtn;
@@ -84,15 +83,12 @@ public class WalkThroughScreenActivity extends AppCompatActivity {
 
     private void setOnboardingItem() {
         List<OnBoardingItems> onBoardingItems = new ArrayList<>();
-
         OnBoardingItems itemlist=new OnBoardingItems();
         itemlist.setTitle("Gain total control \n" +
                 "of your money");
         itemlist.setTitledescription("Become your own money manager and make every cent count");
         itemlist.setImage(R.drawable.onboarding_item_1);
-
         OnBoardingItems itemlist2=new OnBoardingItems();
-
         itemlist2.setTitle("Know where your \n" +
                 "money goes");
         itemlist2.setTitledescription("Track your transaction easily,\n" +
@@ -104,8 +100,6 @@ public class WalkThroughScreenActivity extends AppCompatActivity {
         itemlist3.setTitledescription("Setup your budget for each category\n" +
                 "so you in control");
         itemlist3.setImage(R.drawable.onboarding_item_3);
-
-
         onBoardingItems.add(itemlist);
         onBoardingItems.add(itemlist2);
         onBoardingItems.add(itemlist3);

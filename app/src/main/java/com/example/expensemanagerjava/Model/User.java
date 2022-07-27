@@ -1,7 +1,11 @@
 package com.example.expensemanagerjava.Model;
 
 public class User {
-    private String name,email,UID;
+    private String name, email, UID;
+
+    public User() {
+
+    }
 
     public User(String name, String email, String UID) {
         this.name = name;
