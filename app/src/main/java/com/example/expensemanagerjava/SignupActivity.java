@@ -3,6 +3,7 @@ package com.example.expensemanagerjava;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.expensemanagerjava.Model.User;
@@ -37,6 +39,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,16 +48,20 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Locale;
+
 public class SignupActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private EditText name,email,password;
     private Button signUpBtn;
+    private ImageView backBtn;
     private CheckBox termsAndCondition;
     GoogleSignInClient mGoogleSignInClient;
     private static final int RC_SIGN_IN = 234;
     SignInButton google_sign;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +71,25 @@ public class SignupActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressDialog.setMessage("Please Wait Sign up in Process");
+                progressDialog.show();
                 validate();
             }
         });
         google_sign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.setMessage("Please Wait Sign Up in Process");
+                progressDialog.show();
                 sign_in_google();
+            }
+        });
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),WalkThroughScreenActivity.class);
+                startActivity(i);
+                finish();
             }
         });
     }
@@ -96,11 +115,11 @@ public class SignupActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
-                          saveToDatabase();
+                          saveToDatabase(0);
                         }
                         else {
                             if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-
+                                progressDialog.dismiss();
                                 Toast.makeText(SignupActivity.this,"Provided Email Is Already Registered!", Toast.LENGTH_SHORT).show();
 
                             }
@@ -109,15 +128,22 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveToDatabase(){
-        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(
-                        new User(name.getText().toString(),email.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid()))
+    private void saveToDatabase(int type){
+        FirebaseUser firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
+        User user;
+        if(type == 0) {
+            user = new User(name.getText().toString(),email.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+        } else {
+            user = new User(firebaseuser.getDisplayName().toString(),firebaseuser.getEmail().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+        }
+        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         Common.currentUser = new User(name.getText().toString(),email.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
                         Toast.makeText(getApplicationContext(),"User Registration Done",Toast.LENGTH_SHORT).show();
                         Intent i=new Intent(getApplicationContext(),DashboardActivity.class);
+                        progressDialog.dismiss();
                         startActivity(i);
                         finish();
                     }
@@ -125,6 +151,7 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),"User Registration Failed",Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -142,7 +169,6 @@ public class SignupActivity extends AppCompatActivity {
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
-
                 firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
@@ -161,7 +187,7 @@ public class SignupActivity extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             boolean isNewUser = task.getResult().getAdditionalUserInfo().isNewUser();
                             if (isNewUser){
-                                saveToDatabase();
+                                saveToDatabase(1);
                             }
                         } else {
                             fetchData();
@@ -183,11 +209,13 @@ public class SignupActivity extends AppCompatActivity {
                         {
                             Common.currentUser=usermodel;
                             Intent i=new Intent(getApplicationContext(),DashboardActivity.class);
+                            progressDialog.dismiss();
                             startActivity(i);
                             finish();
                         }
                         else
                         {
+                            progressDialog.dismiss();
                             Toast.makeText(SignupActivity.this, "User Data Not Found", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -210,6 +238,8 @@ public class SignupActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         termsAndCondition = findViewById(R.id.signup_checkbox_terms);
         google_sign = findViewById(R.id.signup_btn_google);
+        backBtn = findViewById(R.id.signup_img_view_back_arrow);
+        progressDialog = new ProgressDialog(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))

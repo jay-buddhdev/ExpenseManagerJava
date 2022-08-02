@@ -51,6 +51,14 @@ public class WalkThroughScreenActivity extends AppCompatActivity {
                 finish();
             }
         });
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent signupIntent = new Intent(WalkThroughScreenActivity.this, LoginActivity.class);
+                startActivity(signupIntent);
+                finish();
+            }
+        });
     }
 
     private void setCurrentOnboardingIndicators(int index) {

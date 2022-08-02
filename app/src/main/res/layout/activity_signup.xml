@@ -129,6 +129,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="40dp"
         android:fontFamily="@font/dmsans"
+        android:backgroundTint="@color/colorPrimary"
         android:text="Sign Up"
         android:textAlignment="center"
         android:textColor="@color/white"
