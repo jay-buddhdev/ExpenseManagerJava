@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.expensemanagerjava.Model.User;
@@ -46,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     SignInButton google_sign;
     private ProgressDialog progressDialog;
+    private TextView forgetPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                 progressDialog.setMessage("Please Wait Login in Process");
                 progressDialog.show();
                 sign_in_google();
+            }
+        });
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent(getApplicationContext(),ForgetPasswordActivity.class);
+                startActivity(i);
+                finish();
             }
         });
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +197,7 @@ public class LoginActivity extends AppCompatActivity {
         google_sign = findViewById(R.id.login_btn_google);
         backBtn = findViewById(R.id.login_img_view_back_arrow);
         progressDialog = new ProgressDialog(this);
-
+        forgetPassword = findViewById(R.id.login_forget_password);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
