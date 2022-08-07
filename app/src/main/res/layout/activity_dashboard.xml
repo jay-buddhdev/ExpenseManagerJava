@@ -7,7 +7,7 @@
     tools:context=".DashboardActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/dashboard_profile"
+        android:id="@+id/dashboard_profile_image"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="25dp"
@@ -26,8 +26,8 @@
         android:text="Hi Jay"
         android:textColor="@color/black"
         android:textSize="16sp"
-        app:layout_constraintStart_toEndOf="@id/dashboard_profile"
-        app:layout_constraintTop_toTopOf="@id/dashboard_profile" />
+        app:layout_constraintStart_toEndOf="@id/dashboard_profile_image"
+        app:layout_constraintTop_toTopOf="@id/dashboard_profile_image" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/dashboard_card_view"
@@ -39,7 +39,7 @@
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dashboard_profile">
+        app:layout_constraintTop_toBottomOf="@id/dashboard_profile_image">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -184,10 +184,8 @@
         app:ss_waveHeight="7"
         app:ss_countBackgroundColor="#ff6f00"
         app:ss_countTextColor="#ffffff"
-        app:ss_countTypeface="fonts/graphik_semibold.ttf"
         app:ss_defaultIconColor="#6200EE"
         app:ss_iconTextColor="#6200EE"
-        app:ss_iconTextTypeface="fonts/graphik_semibold.ttf"
         app:ss_rippleColor="#2f424242"
         app:ss_iconTextSize="14sp"
         app:ss_selectedIconColor="#ff6f00"
