@@ -5,14 +5,192 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/dashboard_profile"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/onboarding_item_1"
+        app:civ_border_width="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
+        android:id="@+id/dashboard_username"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/dmsans"
+        android:text="Hi Jay"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toEndOf="@id/dashboard_profile"
+        app:layout_constraintTop_toTopOf="@id/dashboard_profile" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/dashboard_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:text="DashBoard Screen"
-        />
+        app:layout_constraintTop_toBottomOf="@id/dashboard_profile">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dashboard_card_background" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/cardview_wallet_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="35dp"
+                android:src="@drawable/wallet"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="$ 3400000"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardview_wallet_image" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_balance_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Available Balance"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_balance" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_textview_income_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginBottom="40dp"
+                android:text="Income"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_textview_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="$ 679879"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_textview_income_label" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_textview_expense_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="40dp"
+                android:text="Expense"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/card_textview_expense"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:text="$ 679879"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/card_textview_expense_label" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dashboard_favourite_cat_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dashboard_card_view"
+        android:layout_marginTop="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="25dp"
+        android:textSize="15sp"
+        android:text="Favourite Categories"
+        android:textColor="@color/black" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dashboard_category_recyclerview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/dashboard_favourite_cat_label"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="25dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dashboard_recent_spending_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recent Spending"
+        app:layout_constraintTop_toBottomOf="@id/dashboard_category_recyclerview"
+        android:layout_marginTop="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="25dp"
+        android:textSize="15sp"
+        android:textColor="@color/black" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/dashboard_recent_spending_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/dashboard_recent_spending_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginTop="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    <com.simform.custombottomnavigation.SSCustomBottomNavigation
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:ss_backgroundBottomColor="#ffffff"
+        app:ss_circleColor="#ff6f00"
+        app:ss_waveHeight="7"
+        app:ss_countBackgroundColor="#ff6f00"
+        app:ss_countTextColor="#ffffff"
+        app:ss_countTypeface="fonts/graphik_semibold.ttf"
+        app:ss_defaultIconColor="#6200EE"
+        app:ss_iconTextColor="#6200EE"
+        app:ss_iconTextTypeface="fonts/graphik_semibold.ttf"
+        app:ss_rippleColor="#2f424242"
+        app:ss_iconTextSize="14sp"
+        app:ss_selectedIconColor="#ff6f00"
+        app:ss_selectedIconTextColor="#ff6f00"
+        app:ss_shadowColor="#1f212121" />
 </androidx.constraintlayout.widget.ConstraintLayout>

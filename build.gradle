@@ -2,7 +2,6 @@
 buildscript {
     ext.kotlin_version = '1.7.10'
     repositories {
-
         google()
         mavenCentral()  // Google's Maven repository
 
@@ -10,6 +9,7 @@ buildscript {
     dependencies {
         classpath 'com.google.gms:google-services:4.3.13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.android.tools.build:gradle:4.2.2"
 
     }
 }
@@ -22,6 +22,7 @@ plugins {
 allprojects {
     repositories {
         google()  // Google's Maven repository
+        maven { 'https://maven.google.com' }
     }
 }
 task clean(type: Delete) {
