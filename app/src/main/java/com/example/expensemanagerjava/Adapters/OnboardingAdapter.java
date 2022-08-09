@@ -62,4 +62,5 @@ public class OnboardingAdapter extends RecyclerView.Adapter<OnboardingAdapter.On
             imageOnboarding.setImageResource(onBoardingItem.getImage());
         }
     }
+
 }

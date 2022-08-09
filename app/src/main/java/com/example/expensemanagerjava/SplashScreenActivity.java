@@ -59,7 +59,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     if(usermodel.getUID().equals(FirebaseAuth.getInstance().getCurrentUser().getUid()))
                     {
                         Common.currentUser=usermodel;
-                        Intent i=new Intent(getApplicationContext(),DashboardActivity.class);
+                        Intent i=new Intent(getApplicationContext(),TempDashboardActivity.class);
                         startActivity(i);
                         finish();
                     }

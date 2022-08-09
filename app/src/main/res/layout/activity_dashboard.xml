@@ -187,6 +187,7 @@
         app:ss_defaultIconColor="#6200EE"
         app:ss_iconTextColor="#6200EE"
         app:ss_rippleColor="#2f424242"
+        app:menu="@menu/menu_navigation"
         app:ss_iconTextSize="14sp"
         app:ss_selectedIconColor="#ff6f00"
         app:ss_selectedIconTextColor="#ff6f00"

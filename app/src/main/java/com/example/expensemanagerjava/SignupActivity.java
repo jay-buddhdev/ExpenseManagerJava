@@ -132,15 +132,15 @@ public class SignupActivity extends AppCompatActivity {
         FirebaseUser firebaseuser = FirebaseAuth.getInstance().getCurrentUser();
         User user;
         if(type == 0) {
-            user = new User(name.getText().toString(),email.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+            user = new User(name.getText().toString(),email.getText().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),0l);
         } else {
-            user = new User(firebaseuser.getDisplayName().toString(),firebaseuser.getEmail().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid());
+            user = new User(firebaseuser.getDisplayName().toString(),firebaseuser.getEmail().toString(),FirebaseAuth.getInstance().getCurrentUser().getUid(),0l);
         }
         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        Common.currentUser = new User(name.getText().toString(),email.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid());
+                        Common.currentUser = new User(name.getText().toString(),email.getText().toString(), FirebaseAuth.getInstance().getCurrentUser().getUid(),0l);
                         Toast.makeText(getApplicationContext(),"User Registration Done",Toast.LENGTH_SHORT).show();
                         Intent i=new Intent(getApplicationContext(),DashboardActivity.class);
                         progressDialog.dismiss();
