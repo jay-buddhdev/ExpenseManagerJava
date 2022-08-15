@@ -7,8 +7,9 @@
     android:background="@color/white"
     tools:context=".SplashScreenActivity">
 
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/expenso_gif" />
+
+<!--    <pl.droidsonroids.gif.GifImageView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:src="@drawable/expenso_gif" />-->
 </androidx.constraintlayout.widget.ConstraintLayout>

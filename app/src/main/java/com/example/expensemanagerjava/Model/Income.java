@@ -1,16 +1,25 @@
 package com.example.expensemanagerjava.Model;
 
 public class Income {
-    private String name,category,amount,date;
+    private String name,category,amount,date,image;
 
     public Income() {
     }
 
-    public Income(String name, String category, String amount, String date) {
+    public Income(String name, String category, String amount, String date, String image) {
         this.name = name;
         this.category = category;
         this.amount = amount;
         this.date = date;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getName() {
