@@ -6,41 +6,154 @@
     android:layout_height="match_parent"
     tools:context=".AddExpenseActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/expense_name"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/add_expense_wave_image"
+        android:src="@drawable/ic_wave"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:hint="Name"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/expense_amount"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/add_expense_back_arrow"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:src="@drawable/back_arrow_white"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="30dp"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        app:layout_constraintStart_toStartOf="parent" />
+    <androidx.cardview.widget.CardView
+        android:id="@+id/expense_cardview"
+        app:layout_constraintTop_toBottomOf="@id/add_expense_wave_image"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expense_name" />
-
-    <DatePicker
-        android:id="@+id/expense_date"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expense_amount" />
+        android:layout_marginStart="30dp"
+        app:cardCornerRadius="10dp"
+        android:layout_marginEnd="30dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_expense_name_hint"
+                style="@style/TextLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Expense Name"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/expense_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Submit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expense_date" />
+                <EditText
+                    android:id="@+id/add_expense_txtview_name"
+                    style="@style/EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:drawablePadding="10dp"
+                    android:inputType="text"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_expense_amount_hint"
+                style="@style/TextLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Expense Amount"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/add_expense_name_hint">
+
+                <EditText
+                    android:id="@+id/add_expense_txtview_amount"
+                    style="@style/EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:drawablePadding="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--    <DatePicker-->
+            <!--        android:id="@+id/income_date"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_marginTop="30dp"-->
+            <!--        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--        android:datePickerMode="spinner"-->
+            <!--        app:layout_constraintStart_toStartOf="parent"-->
+            <!--        app:layout_constraintTop_toBottomOf="@id/add_income_amount_hint" />-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/add_expense_date_hint"
+                style="@style/TextLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="40dp"
+                android:hint="Expense Date"
+                android:textColorHint="@color/black"
+                app:hintTextColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/add_expense_amount_hint">
+
+                <EditText
+                    android:id="@+id/expense_date_editext"
+                    style="@style/EditTextTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:drawablePadding="10dp"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_expense_invoice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/add_expense_date_hint"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="40dp"
+                android:text="Add Expense Proof"
+                android:textColor="@color/black"
+                app:icon="@drawable/ic_baseline_add_circle_outline_24"
+                app:iconGravity="textStart"
+                app:iconPadding="2dp"
+                app:iconTint="@color/black"
+                android:layout_marginTop="24dp"
+                android:background="#00000000"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/expense_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Submit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="40dp"
+                app:layout_constraintTop_toBottomOf="@id/add_expense_invoice" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
