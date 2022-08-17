@@ -136,38 +136,16 @@ public class AddIncomeActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode,
                                     int resultCode,
-                                    Intent data)
-    {
+                                    Intent data) {
 
-        super.onActivityResult(requestCode,
-                resultCode,
-                data);
-
-        // checking request code and result code
-        // if request code is PICK_IMAGE_REQUEST and
-        // resultCode is RESULT_OK
-        // then set image in the image view
-        if (requestCode == PICK_IMAGE_REQUEST
-                && resultCode == RESULT_OK
-                && data != null
-                && data.getData() != null) {
-
-            // Get the Uri of data
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             try {
-
-                // Setting image on image view using Bitmap
-                Bitmap bitmap = MediaStore
-                        .Images
-                        .Media
-                        .getBitmap(
-                                getContentResolver(),
-                                filePath);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 uploadImage();
 
-            }
-
-            catch (IOException e) {
+            } catch (IOException e) {
                 // Log the exception
                 e.printStackTrace();
             }

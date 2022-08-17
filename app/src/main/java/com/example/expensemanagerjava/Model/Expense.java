@@ -1,16 +1,26 @@
 package com.example.expensemanagerjava.Model;
 
 public class Expense {
-    private String name,category,amount,date;
+    private String name,category,amount,date,imageUrl;
 
-    public Expense() {
-    }
 
-    public Expense(String name, String category, String amount, String date) {
+    public Expense(String name, String category, String amount, String date, String imageUrl) {
         this.name = name;
         this.category = category;
         this.amount = amount;
         this.date = date;
+        this.imageUrl = imageUrl;
+    }
+
+    public Expense() {
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getName() {
