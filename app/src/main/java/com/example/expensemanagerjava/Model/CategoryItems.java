@@ -6,6 +6,11 @@ public class CategoryItems {
     public CategoryItems() {
     }
 
+    public CategoryItems(String categoryImageUrl, String categoryName) {
+        this.categoryImageUrl = categoryImageUrl;
+        this.categoryName = categoryName;
+    }
+
     public String getCategoryImageUrl() {
         return categoryImageUrl;
     }

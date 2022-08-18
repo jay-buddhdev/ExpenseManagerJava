@@ -165,7 +165,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                                     submitBtn.setEnabled(true);
                                     addExpenseBtn.setText("Expense Proof Added");
                                     addExpenseBtn.setIcon(ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_baseline_done_24));
-                                    Toast.makeText(AddExpenseActivity.this, downloadUrl.toString(), Toast.LENGTH_SHORT).show();
                                 }
                             })
 

@@ -58,7 +58,10 @@ public class DashboardActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id=item.getItemId();
                 if(id==R.id.income_expense){
-                    startActivity(new Intent(DashboardActivity.this, TempDashboardActivity.class)); //Go back to home page
+                    startActivity(new Intent(DashboardActivity.this, TempDashboardActivity.class));
+                }
+                if(id==R.id.catgory){
+                    startActivity(new Intent(DashboardActivity.this, CategoryActivity.class));
                 }
                 if(id==R.id.logout){
                     FirebaseAuth.getInstance().signOut();
