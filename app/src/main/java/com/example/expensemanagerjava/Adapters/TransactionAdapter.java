@@ -1,5 +1,6 @@
 package com.example.expensemanagerjava.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private List<TransacationModel> TransactionItems;
 
     public TransactionAdapter(ArrayList<TransacationModel> transactionList) {
+        Log.d("Transaction", "Got new List with size " + transactionList.size());
         this.TransactionItems = transactionList;
     }
 
     @NonNull
     @Override
     public TranscationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("Transaction", "onCreateViewHolder");
         return new TranscationViewHolder(
                 LayoutInflater.from(parent.getContext()).inflate(R.layout.tempdashboarditem, parent,
                         false
@@ -34,6 +37,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull TranscationViewHolder holder, int position) {
+        Log.d("Transaction", "onBindViewHolder " + position + " -- " + TransactionItems.size());
+
         holder.setTransactionData(TransactionItems.get(position));
     }
 

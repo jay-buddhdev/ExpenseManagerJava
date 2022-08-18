@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -35,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class AddExpenseActivity extends AppCompatActivity {
@@ -184,9 +186,16 @@ public class AddExpenseActivity extends AppCompatActivity {
         }
     }
     private void saveToDatabase(String imageUrl) {
-        Long date=System.currentTimeMillis();
+        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+05:30"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd/HH-mm-ss");
-        String formattedDate = formatter.format(date);
+        //formatter.setTimeZone(TimeZone.getTimeZone("GMT+05:30"));
+        String[] ymd = expenseDate.getText().toString().split("-");
+        cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt(ymd[0]));
+        cal.set(Calendar.MONTH, Integer.parseInt(ymd[1])-1);
+        cal.set(Calendar.YEAR, Integer.parseInt(ymd[2]));
+        Log.d("Date",cal.getTime().toString());
+        String formattedDate = formatter.format(cal.getTime());
+        // String formattedDate = formatter.format(date);
         Expense expense = new Expense(name.getText().toString(),"",amount.getText().toString(),formattedDate,imageUrl);
         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Expense").push().setValue(expense)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

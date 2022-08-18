@@ -42,13 +42,16 @@ public class TempDashboardActivity extends AppCompatActivity {
 //                            .filter(transaction -> transaction.getTransactionType() == true)
 //                            .collect(Collectors.toCollection(ArrayList::new));
 //                }
-                transactionList.removeIf(transaction -> transaction.getTransactionType() == true);
+                transactionList.removeIf(transaction -> transaction.getTransactionType() == false);
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     var transactionmodel = dataSnapshot.getValue(TransacationModel.class);
                     transactionmodel.setTransactionType(false);
                     transactionList.add(transactionmodel);
                 }
-               // adapter.notifyDataSetChanged();
+                transactionList.sort((t1, t2) -> {
+                    return t1.getDate().compareTo(t2.getDate());
+                });
+               adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -65,14 +68,18 @@ public class TempDashboardActivity extends AppCompatActivity {
 //                            .filter(transaction -> transaction.getTransactionType() == false)
 //                            .collect(Collectors.toCollection(ArrayList::new));
 //                }
-                transactionList.removeIf(transaction -> transaction.getTransactionType() == false);
+                transactionList.removeIf(transaction -> transaction.getTransactionType() == true);
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     var transactionmodel = dataSnapshot.getValue(TransacationModel.class);
                     transactionmodel.setTransactionType(true);
                     transactionList.add(transactionmodel);
 
                 }
-               // adapter.notifyDataSetChanged();
+                transactionList.sort((t1, t2) -> {
+                    return t1.getDate().compareTo(t2.getDate());
+                });
+
+                adapter.notifyDataSetChanged();
             }
 
             @Override
