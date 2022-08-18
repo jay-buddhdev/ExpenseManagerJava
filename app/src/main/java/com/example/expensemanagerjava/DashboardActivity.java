@@ -5,17 +5,23 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.expensemanagerjava.Adapters.TransactionAdapter;
 import com.example.expensemanagerjava.Model.TransacationModel;
+import com.example.expensemanagerjava.Utils.Common;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -38,6 +44,7 @@ public class DashboardActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     private ArrayList<TransacationModel> transactionList;
     private TransactionAdapter adapter;
+    private NavigationView navview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +53,24 @@ public class DashboardActivity extends AppCompatActivity {
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         setup();
+        navview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id=item.getItemId();
+                if(id==R.id.income_expense){
+                    startActivity(new Intent(DashboardActivity.this, TempDashboardActivity.class)); //Go back to home page
+                }
+                if(id==R.id.logout){
+                    FirebaseAuth.getInstance().signOut();
+                    Common.currentUser = null;
+                    startActivity(new Intent(DashboardActivity.this, LoginActivity.class)); //Go back to home page
+                    finish();
+
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
     }
 
     private void setup() {
@@ -59,6 +84,7 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
+        navview= findViewById(R.id.dashboard_navigationview);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         transactionList = new ArrayList<>();
         transactionRecyclerview = findViewById(R.id.dashboard_recent_spending_recyclerview);
