@@ -1,5 +1,6 @@
 package com.example.expensemanagerjava.Adapters;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -95,6 +96,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 e.printStackTrace();
             }
             date.setText(formatter.format(curr));
+            if(transacationModel.getTransactionType()){
+                amount.setTextColor(Color.GREEN);
+            }else {
+                amount.setTextColor(Color.RED);
+            }
             amount.setText(transacationModel.getAmount());
         }
     }
