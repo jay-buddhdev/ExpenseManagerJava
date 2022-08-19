@@ -16,4 +16,65 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/add_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:icon="@drawable/ic_baseline_add_24"
+        app:backgroundTint="@color/colorPrimary"
+        app:fabSize="normal"
+        android:text="Actions"
+        app:iconTint="@color/white"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_income_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/income"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/add_fab"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            />
+        <TextView
+            android:id="@+id/add_income_action_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Add Income"
+            app:layout_constraintBottom_toBottomOf="@+id/add_income_fab"
+            app:layout_constraintEnd_toStartOf="@+id/add_income_fab"
+            app:layout_constraintTop_toTopOf="@+id/add_income_fab"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_expense_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            app:fabSize="normal"
+            app:srcCompat="@drawable/expense"
+            app:backgroundTint="@color/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/add_income_fab"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            />
+        <TextView
+            android:id="@+id/add_expense_action_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:text="Add Expense"
+            app:layout_constraintBottom_toBottomOf="@+id/add_expense_fab"
+        app:layout_constraintEnd_toStartOf="@+id/add_expense_fab"
+        app:layout_constraintTop_toTopOf="@+id/add_expense_fab"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

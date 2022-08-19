@@ -104,7 +104,7 @@ public class AddCategoryActivity extends AppCompatActivity {
 
     private void saveToDatabase(String imageUrl) {
         CategoryItems cat = new CategoryItems(imageUrl,cateName.getText().toString());
-        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Category").push().setValue(cat)
+        mDatabase.child("Users").child("Category").push().setValue(cat)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {

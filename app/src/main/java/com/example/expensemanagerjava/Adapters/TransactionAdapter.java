@@ -90,7 +90,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             name.setText(transacationModel.getName());
             Date curr = null;
             try {
-
                 curr = from.parse(transacationModel.getDate().split("/")[0]);
             } catch (ParseException e) {
                 e.printStackTrace();

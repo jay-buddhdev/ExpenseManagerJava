@@ -5,11 +5,17 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.Animator;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.expensemanagerjava.Adapters.TransactionAdapter;
 import com.example.expensemanagerjava.Model.TransacationModel;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,12 +32,21 @@ public class TempDashboardActivity extends AppCompatActivity {
     DatabaseReference databaseReference;
     private ArrayList<TransacationModel> transactionList;
     private TransactionAdapter adapter;
+    FloatingActionButton mAddIncomeFab, mAddExpenseFab;
+    ExtendedFloatingActionButton mAddFab;
+    private TextView addIncomeText,addExpenseText;
+    Boolean isAllFabsVisible;
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp_dashboard);
-        transactionList = new ArrayList<>();
-        transactionRecyclerview = findViewById(R.id.transcation_recyclerview);
+        setup();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("Expense").addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -89,6 +104,53 @@ public class TempDashboardActivity extends AppCompatActivity {
         });
         adapter = new TransactionAdapter(transactionList);
         transactionRecyclerview.setAdapter(adapter);
+        mAddFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!isAllFabsVisible){
+                    mAddIncomeFab.show();
+                    mAddExpenseFab.show();
+                    addIncomeText.setVisibility(View.VISIBLE);
+                    addExpenseText.setVisibility(View.VISIBLE);
+                    mAddFab.extend();
+                    isAllFabsVisible = true;
+                } else {
+                    mAddIncomeFab.hide();
+                    mAddExpenseFab.hide();
+                    addIncomeText.setVisibility(View.GONE);
+                    addExpenseText.setVisibility(View.GONE);
+                    mAddFab.shrink();
+                    isAllFabsVisible = false;
+                }
+            }
+        });
+        mAddIncomeFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TempDashboardActivity.this, AddIncomeActivity.class));
+            }
+        });
+        mAddExpenseFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TempDashboardActivity.this, AddExpenseActivity.class));
+            }
+        });
 
+    }
+
+    private void setup() {
+        transactionList = new ArrayList<>();
+        mAddFab = findViewById(R.id.add_fab);
+        mAddIncomeFab = findViewById(R.id.add_income_fab);
+        mAddExpenseFab = findViewById(R.id.add_expense_fab);
+        addIncomeText = findViewById(R.id.add_income_action_text);
+        addExpenseText = findViewById(R.id.add_expense_action_text);
+        mAddIncomeFab.setVisibility(View.GONE);
+        mAddExpenseFab.setVisibility(View.GONE);
+        addIncomeText.setVisibility(View.GONE);
+        addExpenseText.setVisibility(View.GONE);
+        isAllFabsVisible = false;
+        transactionRecyclerview = findViewById(R.id.transcation_recyclerview);
     }
 }

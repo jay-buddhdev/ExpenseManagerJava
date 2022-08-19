@@ -10,12 +10,15 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.expensemanagerjava.Model.Expense;
@@ -25,16 +28,21 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;
@@ -46,6 +54,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     // private DatePicker incomeDate;
     private MaterialButton addExpenseBtn,submitBtn;
     private DatabaseReference mDatabase;
+    private Spinner categorySpinner;
+    List<String> category;
     private final int PICK_IMAGE_REQUEST = 22;
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -61,10 +71,19 @@ public class AddExpenseActivity extends AppCompatActivity {
         submitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (downloadUrl == null) {
-                    downloadUrl = Uri.parse("");
+                if(TextUtils.isEmpty(name.getText().toString())){
+                    Toast.makeText(AddExpenseActivity.this, "Name is Empty", Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(amount.getText().toString())){
+                    Toast.makeText(AddExpenseActivity.this, "Amount is Empty", Toast.LENGTH_SHORT).show();
+                }else if(TextUtils.isEmpty(expenseDate.getText().toString())){
+                    Toast.makeText(AddExpenseActivity.this, "Date is Empty", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (downloadUrl == null) {
+                        downloadUrl = Uri.parse("");
+                    }
+                    saveToDatabase(downloadUrl.toString());
                 }
-                saveToDatabase(downloadUrl.toString());
+
             }
         });
         addExpenseBtn.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +123,34 @@ public class AddExpenseActivity extends AppCompatActivity {
                 // at last we are calling show to
                 // display our date picker dialog.
                 datePickerDialog.show();
+
+            }
+        });
+        loadSpinner();
+        backarrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddExpenseActivity.this, TempDashboardActivity.class));
+                finish();
+            }
+        });
+    }
+
+    private void loadSpinner() {
+        mDatabase.child("Users").child("Category").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot areaSnapshot: snapshot.getChildren()) {
+                    String categoryName = areaSnapshot.child("categoryName").getValue(String.class);
+                    category.add(categoryName);
+                }
+                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(AddExpenseActivity.this, android.R.layout.simple_spinner_item, category);
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                categorySpinner.setAdapter(categoryAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
@@ -195,14 +242,18 @@ public class AddExpenseActivity extends AppCompatActivity {
         Log.d("Date",cal.getTime().toString());
         String formattedDate = formatter.format(cal.getTime());
         // String formattedDate = formatter.format(date);
-        Expense expense = new Expense(name.getText().toString(),"",amount.getText().toString(),formattedDate,imageUrl);
+        Expense expense = new Expense(name.getText().toString(),categorySpinner.getSelectedItem().toString(),amount.getText().toString(),formattedDate,imageUrl);
         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Expense").push().setValue(expense)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
                         long currentUserBalance = Common.currentUser.getBalance();
+                        long currentExpense = Common.currentUser.getTotalExpense();
+                        long newExpense = currentExpense + Long.valueOf(amount.getText().toString());
                         long newBalance = currentUserBalance - Long.valueOf(amount.getText().toString());
+                        Common.currentUser.setTotalExpense(newExpense);
                         Common.currentUser.setBalance(newBalance);
+                        mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("TotalExpense").setValue(newExpense);
                         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue(newBalance);
                         Toast.makeText(AddExpenseActivity.this, "Added", Toast.LENGTH_SHORT).show();
                     }
@@ -226,5 +277,7 @@ public class AddExpenseActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
         backarrow = findViewById(R.id.add_expense_back_arrow);
+        categorySpinner = findViewById(R.id.add_expense_spinner_category);
+        category =  new ArrayList<String>();
     }
 }

@@ -18,7 +18,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.expensemanagerjava.Adapters.CategoryAdapter;
+import com.example.expensemanagerjava.Adapters.CategoryDashboardAdapter;
 import com.example.expensemanagerjava.Adapters.TransactionAdapter;
+import com.example.expensemanagerjava.Model.CategoryItems;
 import com.example.expensemanagerjava.Model.TransacationModel;
 import com.example.expensemanagerjava.Utils.Common;
 import com.google.android.material.navigation.NavigationView;
@@ -42,7 +45,10 @@ public class DashboardActivity extends AppCompatActivity {
     public ActionBarDrawerToggle actionBarDrawerToggle;
     private RecyclerView transactionRecyclerview;
     DatabaseReference databaseReference;
+    DatabaseReference categoryDatabaseReference;
     private ArrayList<TransacationModel> transactionList;
+    private ArrayList<CategoryItems> CategoryList;
+    private CategoryDashboardAdapter categoryadapter;
     private TransactionAdapter adapter;
     private NavigationView navview;
     @Override
@@ -63,6 +69,9 @@ public class DashboardActivity extends AppCompatActivity {
                 if(id==R.id.catgory){
                     startActivity(new Intent(DashboardActivity.this, CategoryActivity.class));
                 }
+                if(id==R.id.profile){
+                    startActivity(new Intent(DashboardActivity.this, AddExpenseActivity.class));
+                }
                 if(id==R.id.logout){
                     FirebaseAuth.getInstance().signOut();
                     Common.currentUser = null;
@@ -74,6 +83,25 @@ public class DashboardActivity extends AppCompatActivity {
                 return true;
             }
         });
+        categoryDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    var categorymodel = dataSnapshot.getValue(CategoryItems.class);
+                    CategoryList.add(categorymodel);
+
+                }
+                categoryadapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        categoryadapter = new CategoryDashboardAdapter(CategoryList);
+        categoryRecyclerview.setAdapter(categoryadapter);
     }
 
     private void setup() {
@@ -90,7 +118,9 @@ public class DashboardActivity extends AppCompatActivity {
         navview= findViewById(R.id.dashboard_navigationview);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         transactionList = new ArrayList<>();
+        CategoryList = new ArrayList<>();
         transactionRecyclerview = findViewById(R.id.dashboard_recent_spending_recyclerview);
+        categoryDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Category");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         databaseReference.child("Expense").addValueEventListener(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
