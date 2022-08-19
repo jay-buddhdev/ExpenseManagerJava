@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.expensemanagerjava.Adapters.TransactionAdapter;
@@ -36,7 +37,7 @@ public class TempDashboardActivity extends AppCompatActivity {
     ExtendedFloatingActionButton mAddFab;
     private TextView addIncomeText,addExpenseText;
     Boolean isAllFabsVisible;
-
+    private ImageView back_arrow;
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
@@ -136,7 +137,13 @@ public class TempDashboardActivity extends AppCompatActivity {
                 startActivity(new Intent(TempDashboardActivity.this, AddExpenseActivity.class));
             }
         });
-
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TempDashboardActivity.this, DashboardActivity.class));
+                finish();
+            }
+        });
     }
 
     private void setup() {
@@ -151,6 +158,7 @@ public class TempDashboardActivity extends AppCompatActivity {
         addIncomeText.setVisibility(View.GONE);
         addExpenseText.setVisibility(View.GONE);
         isAllFabsVisible = false;
+        back_arrow = findViewById(R.id.transcation_backarrow);
         transactionRecyclerview = findViewById(R.id.transcation_recyclerview);
     }
 }

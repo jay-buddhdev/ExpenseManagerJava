@@ -133,9 +133,9 @@ public class LoginActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
                                 startActivity(i);
                                 finish();
-                            }
-                        } else {
-                            getDataFromDatabase();
+                            } else {
+                                getDataFromDatabase();
+                        }
                         }
                     }
                 });

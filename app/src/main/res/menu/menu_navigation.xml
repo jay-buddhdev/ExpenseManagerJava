@@ -19,10 +19,6 @@
         android:title="Calculator"
         android:icon="@drawable/ic_baseline_calculate_24"/>
     <item
-        android:id="@+id/profile"
-        android:title="Profile"
-        android:icon="@drawable/user"/>
-    <item
         android:id="@+id/logout"
         android:title="Logout"
         android:icon="@drawable/ic_baseline_logout_24"/>

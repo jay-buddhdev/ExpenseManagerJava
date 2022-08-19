@@ -22,7 +22,7 @@ import java.util.List;
 public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
     private List<TransacationModel> TransactionItems;
-    TextView name,date,amount;
+    TextView name,date,amount,category;
     private static SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
     private static SimpleDateFormat from = new SimpleDateFormat("yyyy-MM-dd");
     public TransactionAdapter(ArrayList<TransacationModel> transactionList) {
@@ -83,6 +83,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             date = itemView.findViewById(R.id.transaction_date);
             name = itemView.findViewById(R.id.transaction_name);
             amount = itemView.findViewById(R.id.transaction_amount);
+            category = itemView.findViewById(R.id.transaction_category);
 
         }
 
@@ -100,7 +101,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else {
                 amount.setTextColor(Color.RED);
             }
-            amount.setText(transacationModel.getAmount());
+            amount.setText("$"+transacationModel.getAmount());
+            category.setText(transacationModel.getCategory());
         }
     }
 }

@@ -253,6 +253,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                         long newBalance = currentUserBalance - Long.valueOf(amount.getText().toString());
                         Common.currentUser.setTotalExpense(newExpense);
                         Common.currentUser.setBalance(newBalance);
+                        Toast.makeText(AddExpenseActivity.this, Common.currentUser.getTotalExpense().toString(), Toast.LENGTH_SHORT).show();
                         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("TotalExpense").setValue(newExpense);
                         mDatabase.child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("balance").setValue(newBalance);
                         Toast.makeText(AddExpenseActivity.this, "Added", Toast.LENGTH_SHORT).show();

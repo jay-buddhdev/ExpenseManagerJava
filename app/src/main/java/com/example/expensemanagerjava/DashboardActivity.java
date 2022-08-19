@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,9 +70,6 @@ public class DashboardActivity extends AppCompatActivity {
                 if(id==R.id.catgory){
                     startActivity(new Intent(DashboardActivity.this, CategoryActivity.class));
                 }
-                if(id==R.id.profile){
-                    startActivity(new Intent(DashboardActivity.this, AddExpenseActivity.class));
-                }
                 if(id==R.id.calculator){
                     startActivity(new Intent(DashboardActivity.this,CalculatorActivity.class));
                 }
@@ -108,11 +106,13 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     private void setup() {
-//        userImage = findViewById(R.id.dashboard_profile_image);
-//        userName = findViewById(R.id.dashboard_username);
+        //userImage = findViewById(R.id.user_profile_name);
         userBalance = findViewById(R.id.card_balance);
+        userBalance.setText("$"+Common.currentUser.getBalance().toString());
         userIncome = findViewById(R.id.card_textview_income);
+        userIncome.setText("$"+Common.currentUser.getTotalIncome().toString());
         userExpense = findViewById(R.id.card_textview_expense);
+        userExpense.setText("$"+Common.currentUser.getTotalExpense().toString());
         categoryRecyclerview = findViewById(R.id.dashboard_category_recyclerview);
         drawerLayout = findViewById(R.id.my_drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
@@ -120,8 +120,12 @@ public class DashboardActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
         navview= findViewById(R.id.dashboard_navigationview);
         this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        View headerView=navview.getHeaderView(0);
+        userName = headerView.findViewById(R.id.user_profile_name);
+        userName.setText(Common.currentUser.getName());
         transactionList = new ArrayList<>();
         CategoryList = new ArrayList<>();
+        actionBarDrawerToggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
         transactionRecyclerview = findViewById(R.id.dashboard_recent_spending_recyclerview);
         categoryDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child("Category");
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());

@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.expensemanagerjava.Model.CategoryItems;
@@ -45,6 +46,7 @@ public class AddCategoryActivity extends AppCompatActivity {
     StorageReference storageReference;
     private Uri filePath;
     Uri downloadUrl;
+    private ImageView back_arrow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +69,13 @@ public class AddCategoryActivity extends AppCompatActivity {
                     }
                     saveToDatabase(downloadUrl.toString());
                 }
+            }
+        });
+        back_arrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(AddCategoryActivity.this, CategoryActivity.class));
+                finish();
             }
         });
     }
@@ -109,12 +118,16 @@ public class AddCategoryActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void unused) {
                         Toast.makeText(AddCategoryActivity.this, "Added", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddCategoryActivity.this, CategoryActivity.class));
+                        finish();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(AddCategoryActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(AddCategoryActivity.this, CategoryActivity.class));
+                        finish();
                     }
                 });
     }
@@ -174,5 +187,6 @@ public class AddCategoryActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+        back_arrow= findViewById(R.id.add_category_back_arrow);
     }
 }
