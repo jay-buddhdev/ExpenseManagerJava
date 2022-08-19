@@ -15,6 +15,10 @@
         android:title="Category"
         android:icon="@drawable/ic_baseline_category_24"/>
     <item
+        android:id="@+id/calculator"
+        android:title="Calculator"
+        android:icon="@drawable/ic_baseline_calculate_24"/>
+    <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/user"/>

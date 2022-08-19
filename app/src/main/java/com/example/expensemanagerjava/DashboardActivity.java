@@ -72,6 +72,9 @@ public class DashboardActivity extends AppCompatActivity {
                 if(id==R.id.profile){
                     startActivity(new Intent(DashboardActivity.this, AddExpenseActivity.class));
                 }
+                if(id==R.id.calculator){
+                    startActivity(new Intent(DashboardActivity.this,CalculatorActivity.class));
+                }
                 if(id==R.id.logout){
                     FirebaseAuth.getInstance().signOut();
                     Common.currentUser = null;
